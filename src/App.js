@@ -14,8 +14,11 @@ function App() {
   }, [])
 
   return (
-    <div className="App text-9xl">
-      111
+    <div className="bg-cyan-300 w-screen h-screen flex justify-center">
+      <div className="w-[800px] h-96 bg-white shadow hover:shadow-lg mt-24 rounded-xl p-5">
+        <span className="text-4xl">Todos</span>
+      </div>
+      
     </div>
   );
 }
