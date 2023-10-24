@@ -16,6 +16,7 @@
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
+    "tailwindcss": "^3.3.3",
     "wrangler": "^3.14.0"
   },
   "eslintConfig": {
@@ -37,5 +38,4 @@
     ]
   },
   "proxy": "https://cloudflare-workers-todos-5ss.pages.dev"
-
 }

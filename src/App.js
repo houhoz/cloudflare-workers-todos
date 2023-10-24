@@ -14,7 +14,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App text-9xl">
       111
     </div>
   );
