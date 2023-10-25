@@ -30,6 +30,7 @@ function App() {
     const res = await response.json();
     todos.unshift(res);
     setTodos([...todos]);
+    setInputText('');
   };
 
   const onChangeCheckbox = async (checked, id) => {
@@ -40,6 +41,15 @@ function App() {
     const res = await response.json();
     const index = todos.findIndex((item) => item.id === id);
     todos[index] = res;
+    setTodos([...todos]);
+  };
+
+  const handleDeleteTodo = async (id) => {
+    await fetch(`/deleteTodo/${id}`, {
+      method: 'DELETE',
+    });
+    const index = todos.findIndex((item) => item.id === id);
+    todos.splice(index, 1);
     setTodos([...todos]);
   };
 
@@ -70,7 +80,7 @@ function App() {
             {todos.map((item) => (
               <li
                 key={item.id}
-                className="flex p-3 bg-indigo-100 mt-1 rounded-md hover:bg-indigo-200"
+                className="group/item flex items-center p-3 bg-indigo-100 mt-1 rounded-md hover:bg-indigo-200"
               >
                 <input
                   type="checkbox"
@@ -79,11 +89,15 @@ function App() {
                   onChange={(e) =>
                     onChangeCheckbox(e.target.checked, item.id)
                   }
-                  className="w-10 cursor-pointer"
+                  className="w-6 h-6 cursor-pointer"
                 />
-                <label htmlFor={item.id} className="ml-6 w-full">
-                  {item.content}
-                </label>
+                <span className="ml-6 flex-1">{item.content}</span>
+                <button
+                  onClick={() => handleDeleteTodo(item.id)}
+                  className="invisible group-hover/item:visible cursor-pointer"
+                >
+                  删除
+                </button>
               </li>
             ))}
           </ul>
