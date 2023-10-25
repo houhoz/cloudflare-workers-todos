@@ -1,34 +1,23 @@
-export async function onRequest(context) {
+export async function onRequestGet({ request, env }) {
+  const ip = request.headers.get('CF-Connecting-IP');
 
-  const task = await context.env.EXAMPLE_TODOS.get("data-74.48.44.47");
-  return new Response(task);
+  const setCache = (key, data) => env.TODOS.put(key, data);
+  const getCache = (key) => env.TODOS.get(key);
 
-  // return new Response(task, {
-  //   status: 200,
-  //   headers: {
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Access-Control-Allow-Headers': '*',
-  //     'Access-Control-Allow-Methods': 'GET',
-  //     'Access-Control-Max-Age': '86400',
-  //   },
-  // });
+  const cacheKey = `data-${ip}`;
+  const cache = await getCache(cacheKey);
 
-  // 设置跨域
+  let data;
 
-  // const setCache = (key, data) => env.EXAMPLE_TODOS.put(key, data);
-  // const getCache = key => env.EXAMPLE_TODOS.get(key);
-
-
-
-
-  // const ip = request.headers.get('CF-Connecting-IP');
-  // const cacheKey = `data-${ip}`;
-  // let data;
-  // const cache = await getCache(cacheKey);
-  // if (!cache) {
-  //   await setCache(cacheKey, JSON.stringify(defaultData));
-  //   data = defaultData;
-  // } else {
-  //   data = JSON.parse(cache);
-  // }
+  try {
+    if (!cache) {
+      await setCache(cacheKey, JSON.stringify([]));
+      data = [];
+    } else {
+      data = JSON.parse(cache);
+    }
+    return new Response(JSON.stringify(data), { status: 200 });
+  } catch (error) {
+    return new Response(error, { status: 500 });
+  }
 }

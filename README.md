@@ -5,6 +5,8 @@
 
 使用cloudflare functions + KV + React
 
+https://developers.cloudflare.com/pages/platform/functions/routing/
+
 ```bash
 # 创建项目
 npx wrangler init cloudflare-workers-todos
