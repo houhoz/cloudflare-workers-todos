@@ -28,7 +28,7 @@ function App() {
       body: JSON.stringify(params),
     });
     const res = await response.json();
-    todos.push(res);
+    todos.unshift(res);
     setTodos([...todos]);
   };
 
