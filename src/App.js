@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="bg-cyan-300 w-screen h-screen flex justify-center">
-      <div className="w-[800px] h-96 bg-white shadow hover:shadow-lg mt-24 rounded-xl p-5">
+      <div className="w-[800px] h-[500px] bg-white shadow hover:shadow-lg mt-24 rounded-xl p-5">
         <span className="text-4xl">Todos</span>
         <div className="mt-2 rounded-md flex">
           <input
@@ -66,7 +66,7 @@ function App() {
         {loading ? (
           'loading...'
         ) : (
-          <ul className="border-t-2 mt-6 pt-6">
+          <ul className="border-t-2 mt-6 pt-6 h-[300px] overflow-y-scroll">
             {todos.map((item) => (
               <li
                 key={item.id}

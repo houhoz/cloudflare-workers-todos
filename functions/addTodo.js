@@ -20,12 +20,17 @@ export async function onRequestPost({ request, env }) {
       await setCache(cacheKey, JSON.stringify(todos));
     } else {
       const todos = JSON.parse(cache);
-      const length = todos.length;
-      const latestTodo = todos[length - 1];
-      const latestTodoId = latestTodo.id;
-      data = { ...body, id: latestTodoId + 1 };
-      todos.unshift(data);
-      await setCache(cacheKey, JSON.stringify(todos));
+      if (todos.length) {
+        const latestTodo = todos[0];
+        const latestTodoId = latestTodo.id;
+        data = { ...body, id: latestTodoId + 1 };
+        todos.unshift(data);
+        await setCache(cacheKey, JSON.stringify(todos));
+      } else {
+        data = { ...body, id: 1 };
+        todos.push(data);
+        await setCache(cacheKey, JSON.stringify(todos));
+      }
     }
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
